@@ -11,6 +11,6 @@ HelpWnd::HelpWnd(QWidget *parent) :
 
 HelpWnd::~HelpWnd()
 {
-    qDebug()<<"help del....";
+//    qDebug()<<"help del....";
     delete ui;
 }

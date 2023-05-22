@@ -66,6 +66,7 @@ bool ChildWnd::loadFile()
     if(Qt::mightBeRichText(text)){
         if(dirFileName_.endsWith(".md")){
             setMarkdown(text);
+           
         }else if(dirFileName_.endsWith(".html")||dirFileName_.endsWith(".htm")){
             setHtml(text);
         }else{

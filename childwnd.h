@@ -42,11 +42,6 @@ private:
     QString fileName_; //当前文件名字
     QString dirFileName_; //路径及名字全称
 
-protected:
-//窗口关闭事件
-
-
-
 };
 
 

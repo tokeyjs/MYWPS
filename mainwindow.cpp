@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 
     //设置标题与图标
-    setWindowTitle("WPS");
+    setWindowTitle("MYWPS");
     QPixmap pic;
     pic.load(":/images/wps.png");
     this->setWindowIcon(pic);
@@ -118,7 +118,8 @@ void MainWindow::loadFile()
         bool ret = cwnd->loadFile();
         if(!ret){
             //load err
-            qDebug()<<"load err";
+//            qDebug()<<"load err";
+            statusBar()->showMessage("文件载入失败", 3000);
             ui->tabWidget->removeTab(ui->tabWidget->currentIndex());
             return ;
         }
@@ -128,6 +129,7 @@ void MainWindow::loadFile()
             ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), cwnd->getFileName()+"*");
             static_cast<ChildWnd*>(ui->tabWidget->currentWidget())->isSave = false;
         });
+        statusBar()->showMessage("文件载入成功", 3000);
     }
 
 }
@@ -142,9 +144,11 @@ void MainWindow::saveFile()
     if(ret){
         ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), cwnd->getFileName());
         cwnd->isSave = true;
+        statusBar()->showMessage("文件保存成功", 3000);
     }
     else{
-        qDebug()<<"save error";
+//        qDebug()<<"save error";
+        statusBar()->showMessage("文件保存失败", 3000);
     }
 
 }
@@ -157,9 +161,11 @@ void MainWindow::saveAsFile()
     ChildWnd* cwnd = static_cast<ChildWnd*>(ui->tabWidget->currentWidget());
     bool ret = cwnd->saveAsFile();
     if(ret)
-        qDebug()<<"save as ok";
+//        qDebug()<<"save as ok";
+        statusBar()->showMessage("文件保存成功", 3000);
     else
-        qDebug()<<"save as error";
+        statusBar()->showMessage("文件保存失败", 3000);
+//        qDebug()<<"save as error";
 }
 
 void MainWindow::docUndo()
@@ -330,7 +336,6 @@ void MainWindow::closeTab(int index)
 
 }
 
-
 void MainWindow::on_newAction_triggered()
 {
     this->addNewFile();
@@ -339,14 +344,6 @@ void MainWindow::on_newAction_triggered()
 void MainWindow::on_saveAction_triggered()
 {
     this->saveFile();
-
-//    //更新tab名称
-//    QString tabName = ui->tabWidget->tabText(ui->tabWidget->currentIndex());
-//    qDebug()<<tabName;
-
-//    if(tabName.back()=='*'){
-//        ui->tabWidget->setTabText(ui->tabWidget->currentIndex(), tabName.remove('*'));
-//    }
 }
 
 void MainWindow::on_nextAction_triggered()
@@ -528,5 +525,8 @@ void MainWindow::on_aboutAction_triggered()
 {
     HelpWnd *hp = new HelpWnd();
     hp->setWindowTitle("MYWPS 关于");
+    QPixmap pic;
+    pic.load(":/images/wps.png");
+    hp->setWindowIcon(pic);
     hp->show();
 }
