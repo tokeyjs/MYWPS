@@ -66,6 +66,7 @@ bool ChildWnd::loadFile()
     if(Qt::mightBeRichText(text)){
         if(dirFileName_.endsWith(".md")){
             setMarkdown(text);
+//            setPlainText(text);
         }else if(dirFileName_.endsWith(".html")||dirFileName_.endsWith(".htm")){
             setHtml(text);
         }else{
@@ -80,7 +81,6 @@ bool ChildWnd::loadFile()
 
 bool ChildWnd::saveFile()
 {
-
     //判断是否为已经存在的文件
     if(dirFileName_.isEmpty()){
         //需要指引用户保存
@@ -92,9 +92,6 @@ bool ChildWnd::saveFile()
         splitFileName();
     }
     //可以直接保存
-//    QTextDocument *doc = document();
-//    QTextDocumentWriter wr(dirFileName_);
-//    return wr.write(doc);
 
     QFile file(dirFileName_);
     file.open(QFile::Truncate|QFile::WriteOnly);
